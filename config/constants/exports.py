@@ -590,6 +590,7 @@ EXPORTS: dict[str, str] = {
     "OPENSRE_SESSION_FILE_LOCK_ENV": "session_store",
     # signoz
     "SIGNOZ_API_KEY_ENV": "signoz",
+    "SIGNOZ_MCP_URL_ENV": "signoz",
     "SIGNOZ_URL_ENV": "signoz",
     # slack
     "SLACK_ACCESS_TOKEN_ENV": "slack",

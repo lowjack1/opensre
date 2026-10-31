@@ -21,11 +21,19 @@ from integrations.signoz.tools.query_signoz_traces_tool import (
     _traces_is_available,
     query_signoz_traces,
 )
+from integrations.signoz.tools.signoz_mcp_tool import (
+    _signoz_mcp_available,
+    call_signoz_tool,
+    list_signoz_tools,
+)
 
 __all__ = [
     "_logs_is_available",
     "_metrics_is_available",
+    "_signoz_mcp_available",
     "_traces_is_available",
+    "call_signoz_tool",
+    "list_signoz_tools",
     "query_signoz_logs",
     "query_signoz_metrics",
     "query_signoz_traces",
