@@ -116,6 +116,25 @@ Copy the key (shown once).
 You can also pass any raw metric name known to SigNoz.
 For latency percentiles (p95/p99), prefer `query_signoz_traces`.
 
+### SigNoz MCP tools (optional)
+
+The tools above can't filter by attributes other than the service, group by host, or read alert
+rules. To add those, run the [SigNoz MCP server](https://github.com/SigNoz/signoz-mcp-server) in
+HTTP mode and set `SIGNOZ_MCP_URL`:
+
+```bash
+export SIGNOZ_MCP_URL="http://localhost:8000/mcp"
+```
+
+| Tool | What it does |
+| --- | --- |
+| `list_signoz_tools` | Lists the server's read-only tools, optionally filtered, with input schemas on request |
+| `call_signoz_tool` | Calls one of them by name, e.g. `signoz_get_alert`, `signoz_get_alert_history`, `signoz_execute_builder_query` |
+
+Only read-only tools are listed or called. The server can also create, update and delete alerts,
+dashboards and notification channels; those calls are refused before the server is contacted.
+`SIGNOZ_API_KEY` is sent to the server as the `SIGNOZ-API-KEY` header.
+
 ## Verify
 
 ```bash

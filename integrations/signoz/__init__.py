@@ -1,7 +1,8 @@
 """SigNoz integration helpers.
 
 Provides configuration and connectivity validation for SigNoz via the
-Query Range API (``SIGNOZ_URL`` + ``SIGNOZ_API_KEY``).
+Query Range API (``SIGNOZ_URL`` + ``SIGNOZ_API_KEY``), and optionally a SigNoz
+MCP server (``SIGNOZ_MCP_URL``) for the read-only MCP tools in ``mcp.py``.
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ from typing import Any
 import httpx
 from pydantic import Field
 
-from config.constants.signoz import SIGNOZ_API_KEY_ENV, SIGNOZ_URL_ENV
+from config.constants.signoz import SIGNOZ_API_KEY_ENV, SIGNOZ_MCP_URL_ENV, SIGNOZ_URL_ENV
 from config.strict_config import StrictConfigModel
 from integrations._validation_helpers import report_classify_failure, report_validation_failure
 
@@ -29,6 +30,8 @@ class SigNozConfig(StrictConfigModel):
 
     url: str = ""
     api_key: str = ""
+    # Optional SigNoz MCP server (streamable HTTP), e.g. http://localhost:8000/mcp.
+    mcp_url: str = ""
     timeout_seconds: float = Field(default=DEFAULT_SIGNOZ_TIMEOUT_SECONDS, gt=0)
     max_results: int = Field(default=DEFAULT_SIGNOZ_MAX_RESULTS, gt=0, le=200)
     integration_id: str = ""
@@ -63,6 +66,7 @@ def signoz_config_from_env() -> SigNozConfig | None:
         {
             "url": url,
             "api_key": api_key,
+            "mcp_url": os.getenv(SIGNOZ_MCP_URL_ENV, "").strip(),
         }
     )
 
@@ -137,6 +141,7 @@ def signoz_extract_params(sources: dict[str, dict]) -> dict[str, Any]:
     return {
         "url": str(sz.get("url", "")).strip(),
         "api_key": str(sz.get("api_key", "")).strip(),
+        "mcp_url": str(sz.get("mcp_url", "")).strip(),
     }
 
 
@@ -179,6 +184,7 @@ def classify(credentials: dict[str, Any], record_id: str) -> tuple[SigNozConfig 
             {
                 "url": credentials.get("url", ""),
                 "api_key": credentials.get("api_key", ""),
+                "mcp_url": credentials.get("mcp_url", ""),
                 "integration_id": record_id,
             }
         )

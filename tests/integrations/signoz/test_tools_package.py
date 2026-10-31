@@ -15,6 +15,8 @@ PACKAGE = "integrations.signoz.tools"
 # Every SigNoz tool, mapped to the module that must own it. Adding a tool means
 # adding a row here — the registry set is asserted, not eyeballed.
 EXPECTED_TOOL_MODULES: dict[str, str] = {
+    "call_signoz_tool": "signoz_mcp_tool.tool",
+    "list_signoz_tools": "signoz_mcp_tool.tool",
     "query_signoz_logs": "query_signoz_logs_tool.tool",
     "query_signoz_metrics": "query_signoz_metrics_tool.tool",
     "query_signoz_traces": "query_signoz_traces_tool.tool",
@@ -22,7 +24,7 @@ EXPECTED_TOOL_MODULES: dict[str, str] = {
 
 
 def test_every_signoz_tool_registers_from_its_own_package() -> None:
-    """All three tools stay registered, each from its own tool package."""
+    """Every tool stays registered, each from its own tool package."""
     registered = {
         t.name: t.origin_module
         for t in get_registered_tools()

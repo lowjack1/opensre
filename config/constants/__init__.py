@@ -1360,6 +1360,9 @@ if TYPE_CHECKING:
         SIGNOZ_API_KEY_ENV as SIGNOZ_API_KEY_ENV,
     )
     from config.constants.signoz import (
+        SIGNOZ_MCP_URL_ENV as SIGNOZ_MCP_URL_ENV,
+    )
+    from config.constants.signoz import (
         SIGNOZ_URL_ENV as SIGNOZ_URL_ENV,
     )
     from config.constants.skills import (

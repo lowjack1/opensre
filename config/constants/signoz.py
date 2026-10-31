@@ -4,8 +4,10 @@ from __future__ import annotations
 
 SIGNOZ_URL_ENV = "SIGNOZ_URL"
 SIGNOZ_API_KEY_ENV = "SIGNOZ_API_KEY"
+SIGNOZ_MCP_URL_ENV = "SIGNOZ_MCP_URL"
 
 __all__ = [
     "SIGNOZ_API_KEY_ENV",
+    "SIGNOZ_MCP_URL_ENV",
     "SIGNOZ_URL_ENV",
 ]
